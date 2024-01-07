@@ -238,10 +238,14 @@ int main(void) {
                             }
 
                             if (!strcmp(readbuf,"/nick") && arg) {
+                                /* Change client c's nickname*/
                                 free(c->nick);
                                 int nicklen = strlen(arg);
                                 c->nick = chatMalloc(nicklen+1);
                                 memcpy(c->nick,arg,nicklen+1);
+                                printf("[Log] Client %d changed the nickname to %s\n", c->fd, c->nick);
+
+                                /* TODO: Send the nickname change name message to every clients */
                             } else {
                                 /* Unsupported command. Send an error. */
                                 char *errmsg = "Unsupported command\n";
