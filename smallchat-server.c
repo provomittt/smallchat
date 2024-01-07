@@ -247,8 +247,7 @@ int main(void) {
                                 c->nick = chatMalloc(nicklen+1);
                                 memcpy(c->nick,arg,nicklen+1);
 
-                                /* TODO: Send the nickname change name message to every clients (but c) */
-                                /* Send it to all the other clients. */
+                                /* Send the log message to every clients (but c) */
                                 sendMsgToAllClientsBut(c->fd,msg,msglen);
                                 printf("%s", msg);
                             } else {
