@@ -211,8 +211,13 @@ int main(void) {
                     if (nread <= 0) {
                         /* Error or short read means that the socket
                          * was closed. */
-                        printf("Disconnected client fd=%d, nick=%s\n",
+                        char msg[256];
+                        int msglen = snprintf(msg, sizeof(msg),
+                            "[Log] Client fd=%d, nick=%s disconnected\n",
                             j, Chat->clients[j]->nick);
+                        /* Send the log message to all the other clients. */
+                        printf("%s", msg);
+                        sendMsgToAllClientsBut(j,msg,msglen);
                         freeClient(Chat->clients[j]);
                     } else {
                         /* The client sent us a message. We need to
